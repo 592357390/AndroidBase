@@ -1,12 +1,12 @@
 package com.handarui.baselib.util;
 
 import com.handarui.baselib.AndroidBase;
-import com.handarui.baselib.ResponseBean;
 import com.handarui.baselib.exception.AuthorizeException;
 import com.handarui.baselib.exception.CallCanceledException;
 import com.handarui.baselib.exception.CommonException;
 import com.handarui.baselib.exception.DisconnectException;
 import com.orhanobut.logger.Logger;
+import com.zhexinit.ov.common.bean.ResponseBean;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -39,10 +39,10 @@ public class RxUtil {
                 .flatMap(new Func1<ResponseBean<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(final ResponseBean<T> response) {
-                        if (response.code == 0) {
-                            return Observable.just(response.result);
+                        if (response.getCode() == 0) {
+                            return Observable.just(response.getResult());
                         } else {
-                            return Observable.error(new CommonException(response.code, response.message));
+                            return Observable.error(new CommonException(response.getCode(), response.getMessage()));
                         }
                     }
                 }, new Func1<Throwable, Observable<? extends T>>() {

@@ -14,6 +14,13 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            credentials {
+                username "admin"
+                password "hbx123654"
+            }
+            url "http://218.244.148.200:1889/nexus/content/repositories/snapshots/"
+        }
         jcenter()
     }
 }

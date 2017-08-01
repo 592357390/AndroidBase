@@ -1,7 +1,7 @@
 package com.handarui.androidbase.api;
 
 import com.handarui.androidbase.bean.AppVersionBean;
-import com.handarui.baselib.ResponseBean;
+import com.zhexinit.ov.common.bean.ResponseBean;
 
 import retrofit2.http.GET;
 import rx.Observable;

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 def MAVEN_LOCAL_PATH = 'http://218.244.148.200:1889/nexus/content/repositories/snapshots'
 def ARTIFACT_ID = 'android-base'
-def VERSION_NAME = '1.0.0-SNAPSHOT'
+def VERSION_NAME = '1.0.1-SNAPSHOT'
 def GROUP_ID = 'handarui'
 def ACCOUNT = 'admin'
 def PASSWORD = 'hbx123654'
@@ -10,8 +10,9 @@ def PASSWORD = 'hbx123654'
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url:MAVEN_LOCAL_PATH ){
-                authentication(userName: ACCOUNT, password: PASSWORD)}
+            repository(url: MAVEN_LOCAL_PATH) {
+                authentication(userName: ACCOUNT, password: PASSWORD)
+            }
             pom.project {
                 groupId GROUP_ID
                 artifactId ARTIFACT_ID
@@ -24,7 +25,7 @@ uploadArchives {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 15
@@ -63,4 +64,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
 
     compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.zhexinit.ov.common:common-model:2.0-SNAPSHOT'
 }
