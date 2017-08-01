@@ -1,4 +1,4 @@
-package com.handarui.androidbase;
+package com.handarui.baselib.common;
 
 import com.handarui.baselib.exception.AuthorizeException;
 import com.handarui.baselib.exception.CommonException;

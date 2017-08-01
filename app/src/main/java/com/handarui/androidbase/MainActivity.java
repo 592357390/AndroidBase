@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.handarui.androidbase.api.HomeApiService;
 import com.handarui.androidbase.bean.AppVersionBean;
+import com.handarui.baselib.common.DefaultErrorHandler;
 import com.handarui.baselib.net.RetrofitFactory;
 import com.handarui.baselib.util.RxUtil;
 import com.orhanobut.logger.Logger;
