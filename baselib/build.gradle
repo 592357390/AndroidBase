@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
-def MAVEN_LOCAL_PATH = 'http://218.244.148.200:1889/nexus/content/repositories/snapshots'
+def MAVEN_LOCAL_PATH = 'http://nexus.jingzheit.com:8081/repository/maven-snapshots/'
 def ARTIFACT_ID = 'android-base'
-def VERSION_NAME = '1.0.2-SNAPSHOT'
+def VERSION_NAME = '1.0.3-SNAPSHOT'
 def GROUP_ID = 'handarui'
 def ACCOUNT = 'admin'
 def PASSWORD = 'hbx123654'
@@ -52,9 +52,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'com.hwangjr.rxbus:rxbus:1.0.5'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
