@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HomeApiService homeService = RetrofitFactory.createRestService(HomeApiService.class);
-                RxUtil.wrapRestCall(homeService.update_app()).subscribe(new Action1<AppVersionBean>() {
+                RxUtil.wrapRestCall(homeService.update_app(), "").subscribe(new Action1<AppVersionBean>() {
                     @Override
                     public void call(AppVersionBean appVersionBean) {
                         Logger.d(appVersionBean.versionCode);

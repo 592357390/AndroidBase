@@ -5,6 +5,7 @@ import com.handarui.baselib.exception.AuthorizeException;
 import com.handarui.baselib.exception.CallCanceledException;
 import com.handarui.baselib.exception.CommonException;
 import com.handarui.baselib.exception.DisconnectException;
+import com.handarui.baselib.exception.ReqIdMatchException;
 import com.orhanobut.logger.Logger;
 import com.zhexinit.ov.common.bean.ResponseBean;
 
@@ -33,12 +34,15 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> Single<T> wrapRestCall(final Observable<ResponseBean<T>> call) {
+    public static <T> Single<T> wrapRestCall(final Observable<ResponseBean<T>> call, final String reqId) {
         return call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<ResponseBean<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(final ResponseBean<T> response) {
+                        if (!reqId.equals(response.getReqId())) {
+                            return Observable.error(new ReqIdMatchException());
+                        }
                         if (response.getCode() == 0) {
                             return Observable.just(response.getResult());
                         } else {
