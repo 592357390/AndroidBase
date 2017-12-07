@@ -44,12 +44,13 @@ public class OkHttpClientManager {
                 .readTimeout(30, TimeUnit.SECONDS);
 
         okHttpClient = okHttpClientBuilder.build();
-
-        try {
-            InputStream is = context.getAssets().open(AndroidBase.getCerFilename());
-            setCertificates(is);
-        } catch (IOException e) {
-            Logger.e(e.getMessage());
+        if (!AndroidBase.isAutoHttps()) {
+            try {
+                InputStream is = context.getAssets().open(AndroidBase.getCerFilename());
+                setCertificates(is);
+            } catch (IOException e) {
+                Logger.e(e.getMessage());
+            }
         }
     }
 

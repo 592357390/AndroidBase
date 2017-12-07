@@ -31,6 +31,8 @@ public class AndroidBase {
 
     private static String DEVICE_INFO;
 
+    private static boolean AUTO_HTTPS = true;
+
     /**
      * 登录url
      */
@@ -42,16 +44,17 @@ public class AndroidBase {
     private static String LOGOUT_URL;
 
     public AndroidBase(Context context, String httpPath, String httpsPath, boolean debug, String aesKey,
-                       String cerFileName, String deviceInfo, String loginUrl, String logoutUrl) {
-        this.context = context;
-        this.API_BASE_PATH = httpPath;
-        this.API_HTTPS_BASE_PATH = httpsPath;
-        this.DEBUG = debug;
-        this.AES_KEY_ENCRYPT_TOKEN = aesKey;
-        this.CER_FILENAME = cerFileName;
-        this.DEVICE_INFO = deviceInfo;
-        this.LOGIN_URL = loginUrl;
-        this.LOGOUT_URL = logoutUrl;
+                       String cerFileName, String deviceInfo, String loginUrl, String logoutUrl, boolean autoHttps) {
+        AndroidBase.context = context;
+        AndroidBase.API_BASE_PATH = httpPath;
+        AndroidBase.API_HTTPS_BASE_PATH = httpsPath;
+        AndroidBase.DEBUG = debug;
+        AndroidBase.AES_KEY_ENCRYPT_TOKEN = aesKey;
+        AndroidBase.CER_FILENAME = cerFileName;
+        AndroidBase.DEVICE_INFO = deviceInfo;
+        AndroidBase.LOGIN_URL = loginUrl;
+        AndroidBase.LOGOUT_URL = logoutUrl;
+        AndroidBase.AUTO_HTTPS = autoHttps;
     }
 
     public static Context getContext() {
@@ -90,6 +93,10 @@ public class AndroidBase {
         return LOGOUT_URL;
     }
 
+    public static boolean isAutoHttps() {
+        return AUTO_HTTPS;
+    }
+
     public void init() {
         Logger.addLogAdapter(new AndroidLogAdapter() {
             @Override
@@ -112,9 +119,9 @@ public class AndroidBase {
         } else if (TextUtils.isEmpty(API_BASE_PATH)) {
             result = "http path is null";
         } else if (TextUtils.isEmpty(API_HTTPS_BASE_PATH)) {
-            result = "https path is null";
-        } else if (TextUtils.isEmpty(CER_FILENAME)) {
-            result = "cer file name is null";
+            if (!AUTO_HTTPS) {
+                result = "https path is null";
+            }
         }
         return result;
     }
@@ -133,11 +140,18 @@ public class AndroidBase {
 
         private String CER_FILENAME;
 
-        private String DEVICE_INFO = "android";
+        private String DEVICE_INFO;
 
         private String LOGIN_URL = "login";
 
         private String LOGOUT_URL = "logout";
+
+        private boolean AUTO_HTTPS = true;
+
+        public AndroidBaseBuilder(Context context, String httpPath) {
+            this.context = context;
+            this.API_BASE_PATH = httpPath;
+        }
 
         public AndroidBaseBuilder(Context context, String httpPath, String httpsPath) {
             this.context = context;
@@ -190,9 +204,14 @@ public class AndroidBase {
             return this;
         }
 
+        public AndroidBaseBuilder setAutoHttps(boolean AUTO_HTTPS) {
+            this.AUTO_HTTPS = AUTO_HTTPS;
+            return this;
+        }
+
         public AndroidBase createAndroidBase() {
             return new AndroidBase(context, API_BASE_PATH, API_HTTPS_BASE_PATH, DEBUG,
-                    AES_KEY_ENCRYPT_TOKEN, CER_FILENAME, DEVICE_INFO, LOGIN_URL, LOGOUT_URL);
+                    AES_KEY_ENCRYPT_TOKEN, CER_FILENAME, DEVICE_INFO, LOGIN_URL, LOGOUT_URL, AUTO_HTTPS);
         }
 
     }

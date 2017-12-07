@@ -37,14 +37,15 @@ public class RetrofitFactory {
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build();
-
-        httpsRetrofitInstance = new Retrofit.Builder()
-                .baseUrl(AndroidBase.getApiHttpsBasePath())
-                .client(OkHttpClientManager.getSslOkHttpClient())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build();
+        if (!AndroidBase.isAutoHttps()) {
+            httpsRetrofitInstance = new Retrofit.Builder()
+                    .baseUrl(AndroidBase.getApiHttpsBasePath())
+                    .client(OkHttpClientManager.getSslOkHttpClient())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build();
+        }
     }
 
     /**
@@ -62,6 +63,10 @@ public class RetrofitFactory {
      * @return
      */
     public static <T> T createHttpsRestService(Class<T> service) {
-        return httpsRetrofitInstance.create(service);
+        if (AndroidBase.isAutoHttps()) {
+            return retrofitInstance.create(service);
+        } else {
+            return httpsRetrofitInstance.create(service);
+        }
     }
 }
