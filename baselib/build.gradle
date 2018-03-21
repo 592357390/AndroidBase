@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'maven'
 def MAVEN_LOCAL_PATH = 'http://nexus.jingzheit.com:8081/repository/maven-snapshots/'
 def ARTIFACT_ID = 'android-base'
@@ -64,4 +65,8 @@ dependencies {
 
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.zhexinit.ov.common:common-model:2.0-SNAPSHOT'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
